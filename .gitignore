@@ -1,10 +1,10 @@
 yelp_academic_dataset_business.json
 yelp_academic_dataset_checkin.json
 yelp_academic_dataset_review.json
-./simplejson
-./simplejson-3.10.0-py3.6egg-info
-./dataset-examples-master
-
+/simplejson/*
+/simplejson-3.10.0-py3.6.egg-info/*
+/dataset-examples-master/*
+/site-packages
 
 yelp_academic_dataset_business.csv
 yelp_academic_dataset_checkin.csv
