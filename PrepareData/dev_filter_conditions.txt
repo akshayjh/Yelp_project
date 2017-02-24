@@ -1,0 +1,201 @@
+144072 business
+
+#[(0, 'neighborhood'), (1, 'business_id'), (2, 'hours'), (3, 'is_open'), 
+#(4, 'address'), (5, 'attributes'), (6, 'categories'), (7, 'city'), 
+#(8, 'review_count'), (9, 'name'), (10, 'longitude'), (11, 'state'), 
+#(12, 'stars'), (13, 'latitude'), (14, 'postal_code'), (15, 'type')]
+
+0: neighborhood n/a
+mostly blank
+e.g.
+Dufferin Grove
+Downtown Core
+
+1: business_id <-- target
+
+2: hours n/a
+3: is_open n/a
+4: address n/a 
+
+5: attributes, minimally applicable
+[u'BikeParking: True', u"BusinessParking: {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}", u'RestaurantsPriceRange2: 1']
+[u'ByAppointmentOnly: True']
+
+6. categories 
+**********
+select those with 'Restaurants' or 'Shopping'
+**********
+A small percentage is blank under this column: ignore those.
+
+what it looks like:
+[u'Tobacco Shops', u'Nightlife', u'Vape Shops', u'Shopping']
+[u'Caterers', u'Grocery', u'Food', u'Event Planning & Services', u'Party & Event Planning', u'Specialty Food']
+[u'Restaurants', u'Pizza', u'Chicken Wings', u'Italian']
+[u'Hair Removal', u'Beauty & Spas', u'Blow Dry/Out Services', u'Hair Stylists', u'Hair Extensions', u'Massage', u'Permanent Makeup', u'Waxing', u'Hair Salons']
+
+stats:
+('Restaurants', 48485)
+('Shopping', 22466)
+('Food', 21189)
+('Beauty & Spas', 13711)
+('Home Services', 11241)
+...
+('Attraction Farms', 1)
+('Art Tours', 1)
+('Animal Physical Therapy', 1)
+('Alsatian', 1)
+('Agriturismi', 1)
+
+7: city, n/a
+no repeated cities
+('Las Vegas', 22892)
+('Toronto', 14540)
+('Phoenix', 14468)
+('Scottsdale', 6917)
+('Charlotte', 6912)
+...
+('Ahwatukee Foothills Village', 1)
+('Ahwahtukee', 1)
+('Aberlady', 1)
+('Aberdour', 1)
+('AGINCOURT', 1)
+
+
+8: review_count
+**********
+save those with 30 to 50 reviews
+**********
+sorted by #of occurences
+('3', 21912)
+('4', 15475)
+('5', 11495)
+...
+('750', 1)
+('1961', 1)
+('767', 1)
+#reviews to #occurences, specific range
+50 306
+49 349
+48 395
+47 372
+...
+33 708
+32 735
+31 770
+30 818
+
+9: name, ignore for now
+('Starbucks', 846)
+("McDonald's", 600)
+('Subway', 544)
+('Taco Bell', 265)
+('Pizza Hut', 253)
+...
+('L.A. Tan', 1)
+('Shanker Dixit, MD - Neurology Center of Las Vegas', 1)
+("Edison's Pizza Kitchen", 1)
+('Savory Hill', 1)
+('Pinnacle Printing & Design', 1)
+
+10: longitude, ignore for now
+
+11: state, ignore non USA 'states'
+us_state ['SC', 'IL', 'OH', 'NC', 'PA', 'VT', 'NV', 'NY', 'WI', 'AZ']
+not_us_state ['EDH', 'FAL', 'BW', 'ESX', 'NTH', 'FLN', 'KHL', 'ELN', 'NLK', 'SCB', 'NI', 'FIF', 'ON', 'MLN', 'HLD', 'WLN', 'QC', 'STG', 'PKN']
+
+('NLK', 1)
+('FLN', 1)
+('VT', 1)
+...
+('PA', 8091)
+('OH', 9966)
+('NC', 10177)
+('ON', 24507)
+('NV', 28214)
+('AZ', 43492)
+
+12: stars
+rounded to nearest 0.5
+9 values: 1.0, 1.5, ..., 4.5, 5.0
+[('4.0', 29481),
+ ('3.5', 26753),
+ ('5.0', 21041),
+ ('3.0', 20541),
+ ('4.5', 20387),
+ ('2.5', 12594),
+ ('2.0', 7577),
+ ('1.5', 3252),
+ ('1.0', 2446)]
+
+13: latitude, ignore for now
+('36.175', 181)
+('33.4483771', 129)
+('36.1697096', 107)
+...
+('33.060151', 1)
+('33.0573149979', 1)
+('32.998019', 1)
+
+14:
+#(12, 'stars'), (13, 'latitude'), (14, 'postal_code'), (15, 'type')]
+('89109', 2688)
+('85251', 1774)
+('85281', 1557)
+...
+('07141', 1)
+('05440', 1)
+('02224', 1)
+
+15: 'type'
+all business
+
+
+attributes continued: food vs. restaurant
+categorized businesses to those with the attribute only food, only restaurant, and both. There is a lot of intersection.
+
+A. food w/o restaurants
+('Starbucks', 755)
+('Walgreens', 247) < -- don't want
+("Dunkin' Donuts", 149)
+
+B. restaurants w/o food
+("McDonald's", 575)
+('Subway', 518)
+('Taco Bell', 257)
+
+C. food and restaurants
+('Panera Bread', 107)
+("Jimmy John's", 93)
+('Starbucks', 89)
+
+
+A&B&C:
+{'Amaya Express', 'Dairy Queen', 'Starbucks', "Tim Horton's", 'Costa Coffee', 'Sheetz', 'Life Cafe', 'Paradise Bakery', 'Au Bon Pain', "Putter's Bar & Grill", 'Rockaberry', 'Einstein Bros Bagels', 'Rawlicious', 'Nogales Hot Dogs', 'Coco Cafe', 'The Second Cup', 'Paradise Bakery and Cafe', 'Wild Wing', 'Country Style', 'Au Bon Pain Co', 'Taco Bell', 'International House of Pancakes', 'Shirin Mahal Bakery & Sweets', 'Tim Hortons', 'Second Cup', 'Little Caesars', 'Tropical Smoothie Cafe', "Jimmy's Coffee", 'Einstein Bros', 'Paradise Bakery & Cafe', 'Aroma Espresso Bar', 'Paintlounge', 'Villa Italian Kitchen', "Dunkin' Donuts", 'Pulp Juice and Smoothie Bar', 'Local Tavern', 'Presse Cafe', "Culver's", 'Cinnabon', 'Freshii', 'Villa Madina', 'China Garden', 'Nourish', 'Caffe Nero', 'Sonic', 'City Cafe', 'Tim Horton', 'Panera Bread', 'Food Lion', 'The Pantry', 'Wing Machine', 'La Dolce Vita'}
+
+A&B - A&B&C:
+{'Thobors Boulangerie Patisserie Café', "Kim's À La Cart", 'Evo Cafe', 'Greek Village Grille', 'William J Walter', 
+...,
+'Archtop Cafe', 'Tutto', "Camille's Sidewalk Cafe", 'Capriccio', "Bentley's Coffee"}
+
+A&C - A&B&C:
+{'COBS Bread', 'Songbird Coffee & Tea House', 'Copps Food Center', 'Bäckerei Nast', "Timothy's Cafe", 
+...,
+'CoCo', 'Caffè Art Java', 'Honey Hut', 'Baskin-Robbins', 'Juice Bar'}
+
+B&C - A&B&C:
+{'US Fried Chicken', 'Sushi Legend', 'Thai Basil Signature', 'Kitchen 73', 'Italian Village Pizza', 
+..., 
+"Samurai Sam's", "PT's", "Matt's Big Breakfast", 'Golden China', 'Shebeen'}
+
+
+Prev/Basic Requirements:
+    1. Categorie has restaurant' (if just 'food', would get Walgreens)
+    2. # reviews it has is between 30-50
+    3. It is located in the United STates+
+    
+Additional Requirment: 
+	City = Las Vegas
+	3 diff files:
+		Attrib contains 'Mexican', 'Chinese', 'Italian'
+
+    
